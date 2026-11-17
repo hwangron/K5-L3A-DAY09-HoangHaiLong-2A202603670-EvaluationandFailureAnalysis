@@ -11,6 +11,9 @@ metrics:
   - {id: db_fact_kept,          kind: capability, level: step,       grader: code, threshold: {min: 0.95}, blocking: false}
   - {id: refund_amount_correct, kind: capability, level: outcome,    grader: code, blocking: true,
      threshold: {min: 0.95, no_significant_drop: true}}
+  # FM-04/FM-05: the amount proposed to the host equals the policy amount (label proposal_amount).
+  - {id: proposal_matches_policy, kind: capability, level: outcome, grader: code, blocking: true,
+     threshold: {min: 0.95, no_significant_drop: true}}
   - {id: pass_rate,             kind: capability, level: outcome,    grader: lab8.metrics.trial_pass, blocking: true,
      threshold: {min: 0.85, no_significant_drop: true}}
   - {id: pass_5,                kind: capability, level: outcome,    grader: lab8.metrics.summarize, threshold: {min: 0.80}, blocking: false}

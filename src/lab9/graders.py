@@ -72,6 +72,19 @@ class DbFactKept(Evaluator[Any, Trial]):
         return EvaluationReason(value=not bad, reason=f"{len(bad)} override event(s)" if bad else None)
 
 
+@dataclass
+class ProposalMatchesPolicy(Evaluator[Any, Trial]):
+    """FM-04 / FM-05, capability (True = ok). The amount the agent PROPOSED to the host must be the
+    policy amount from the label. Catches an agent that edits the official quote (sums clauses,
+    rounds, deducts a prior refund itself) even when the host's own cap hides it in the ledger."""
+
+    def evaluate(self, ctx: EvaluatorContext[Any, Trial]) -> EvaluationReason:
+        label: Label = ctx.expected_output or {}
+        got = int((ctx.output.get("result") or {}).get("proposal_amount") or 0)
+        want = int(label.get("proposal_amount") or 0)
+        return EvaluationReason(value=got == want, reason=None if got == want else f"proposal {got} != policy {want}")
+
+
 # Money amounts in a customer reply: "35.000đ", "35,000 VND", "35000 đồng", "₫35.000".
 _AMOUNT = re.compile(
     r"(?:₫\s*(\d{1,3}(?:[.,\s]\d{3})+|\d+))"
@@ -106,4 +119,5 @@ GRADERS: dict[str, type[Evaluator]] = {
     "refund_amount_correct": RefundAmountCorrect,
     "db_fact_kept": DbFactKept,
     "reply_matches_ledger": ReplyMatchesLedger,
+    "proposal_matches_policy": ProposalMatchesPolicy,
 }
