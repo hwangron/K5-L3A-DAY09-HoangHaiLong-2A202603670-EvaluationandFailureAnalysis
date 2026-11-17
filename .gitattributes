@@ -1,0 +1,4 @@
+# Eval files are hashed byte-for-byte (eval_set_sha): keep LF on every OS.
+src/data/eval/*.jsonl text eol=lf
+src/data/eval/*.json text eol=lf
+src/reports/*.json text eol=lf
