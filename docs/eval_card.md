@@ -43,7 +43,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi s�
 |---|---|---|
 | `fixed`, `honest_refactor` | merge (0 báo nhầm) | — |
 | `slice_regression` (cộng clause, seed lẻ) | block | `pass_rate` trung bình 0.9357 vẫn trên sàn, CI [−0.121, +0.029] chạm 0 → **chỉ slice `money_movement`** (0.85 < 0.90) chặn được |
-| `flaky_regression` (làm tròn, 1/5 seed) | block | **`pass_hat_5` 0.5714 < 0.85**, slice `money_movement`, `new_failures` |
+| `flaky_regression` (làm tròn, 1/5 seed) | block | **`pass_hat_5` 0.5714 < 0.85**, slice `money_movement`, `new_failures`. `pass_rate` trung bình (0.9143) cũng chặn ở lần chạy này nhờ CI [−0.114, −0.014], nhưng chỉ sát 0: lỗi ở ít item hơn thì CI sẽ chạm 0, còn `pass_hat_5` vẫn chặn |
 | `seeded_regression` | block | metric chính + slice `adversarial`, `denial`, `money_movement` |
 | lỗi FM-08 (reply nói sai số tiền) | block | `reply_matches_ledger` + slice `money_movement/reply_matches_ledger` |
 | lỗi hiếm nấp sau bản sửa (vd. tin ticket không ghi event, 1/5 seed) | block | `new_failures` (dòng (item, seed) đang pass trên main mà fail trên PR; max 0) |
